@@ -1,0 +1,66 @@
+[
+   {
+      "RequestSchedule":{
+         "batch":[
+            {
+               "requests":[
+                  {
+                     "order_id":1,
+                     "type":"POST",
+                     "uri":"/api/v1/clusters/<clustername>/requests",
+                     "RequestBodyInfo":{
+                        "RequestInfo":{
+                           "context":"HDFS Service Check (batch 1 of 3)",
+                           "command":"HDFS_SERVICE_CHECK"
+                        },
+                        "Requests/resource_filters":[
+                           {
+                              "service_name":"HDFS"
+                           }
+                        ]
+                     }
+                  },
+                  {
+                     "order_id":2,
+                     "type":"POST",
+                     "uri":"/api/v1/clusters/<clustername>/requests",
+                     "RequestBodyInfo":{
+                        "RequestInfo":{
+                           "context":"YARN Service Check (batch 2 of 3)",
+                           "command":"YARN_SERVICE_CHECK"
+                        },
+                        "Requests/resource_filters":[
+                           {
+                              "service_name":"YARN"
+                           }
+                        ]
+                     }
+                  },
+                  {
+                     "order_id":3,
+                     "type":"POST",
+                     "uri":"/api/v1/clusters/<clustername>/requests",
+                     "RequestBodyInfo":{
+                        "RequestInfo":{
+                           "context":"MapReduce Service Check (batch 3 of 3)",
+                           "command":"MAPREDUCE2_SERVICE_CHECK"
+                        },
+                        "Requests/resource_filters":[
+                           {
+                              "service_name":"MAPREDUCE2"
+                           }
+                        ]
+                     }
+                  }
+               ]
+            },
+            {
+               "batch_settings":{
+                  "batch_separation_in_seconds":1,
+                  "task_failure_tolerance":1
+               }
+            }
+         ]
+      }
+   }
+]

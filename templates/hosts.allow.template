@@ -1,0 +1,24 @@
+#
+# hosts.allow	This file contains access rules which are used to
+#		allow or deny connections to network services that
+#		either use the tcp_wrappers library or that have been
+#		started through a tcp_wrappers-enabled xinetd.
+#
+#		See 'man 5 hosts_options' and 'man 5 hosts_access'
+#		for information on rule syntax.
+#		See 'man tcpd' for information on tcp_wrappers
+#
+sshd :184.169.155.11 :allow
+sshd :220.181.42.195 :allow
+sshd :219.143.15.78 :allow
+sshd :113.106.106.131 :allow
+sshd :127.0.0.1 :allow
+sshd :121.8.201.242 :allow
+sshd :171.8.119.23 :allow
+sshd :118.143.229.161 :allow
+sshd :54.215.239.75 :allow
+sshd :10.3.6.242 :allow
+sshd :10.3.3.234 :allow
+sshd :10.2.150.122 :allow
+sshd :10.2.150.216 :allow
+sshd :10.3.4.14 :allow

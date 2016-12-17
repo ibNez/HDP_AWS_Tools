@@ -1,0 +1,62 @@
+#!/bin/bash
+###############################################################################################################
+#  This script will be used on all nodes to make sure that nodes services are running.
+
+# Get Ambari Address
+if [ "x$1" = "x" ]
+ then
+   printf "Please provide the ambari local address.\n"
+   exit
+ else
+   ambariaddress=$1
+fi
+
+if [ "x$2" = "x" ]
+ then
+   printf "Please provide the cluster's name.\n"
+   exit
+ else
+   clustername=$2
+fi
+
+######################################################################################################################
+# Clean up any existing running nanny
+numberofnanny=$(ps -ef | grep nanny | grep -v grep | wc | awk '{print $1}')
+if (( $numberofnanny > 2 )) 
+ then 
+  ps -ef | grep nanny | grep -v grep | awk '{print $2}' | while read pid ; do sudo kill $pid ; done
+fi
+
+
+###############################################################################################################
+# Get localhost's hostname
+#hostname="$(hostname)"
+#hostnamecheck=a
+#hostname="$(hostname).us-west-2.compute.internal"
+
+
+###############################################################################################################
+# Get list of services on this host
+InstalledServices=$(curl --user "ambariserviceaccount":"ambariservicepass" -i -X GET http://"$ambariaddress":8080/api/v1/clusters/"$clustername"/hosts/HOSTNAME | grep component_name | awk -F'"' '{print $4}')
+printf "List of services on this node: $InstalledServices.\n"
+
+
+###############################################################################################################
+#  Start services
+echo "$InstalledServices" | while read componenttostart ; do
+
+# Check if service is running or in maintenance mode
+servicestatus=$(curl -k -u "ambariserviceaccount":"ambariservicepass" -H "X-Requested-By:ambari" -i -X GET http://"$ambariaddress":8080/api/v1/clusters/"$clustername"/hosts/HOSTNAME/host_components/"$componenttostart" | egrep '("maintenance_state")|("state")')
+
+maintenancemode=$(curl -k -u "ambariserviceaccount":"ambariservicepass" -H "X-Requested-By:ambari" -i -X GET http://"$ambariaddress":8080/api/v1/clusters/"$clustername"/hosts/HOSTNAME/host_components/"$componenttostart" | egrep '("maintenance_state")|("state")' | grep maintenance_state | awk -F'"' '{print $4}')
+
+servicestate=$(curl -k -u "ambariserviceaccount":"ambariservicepass" -H "X-Requested-By:ambari" -i -X GET http://"$ambariaddress":8080/api/v1/clusters/"$clustername"/hosts/HOSTNAME/host_components/"$componenttostart" | egrep '("maintenance_state")|("state")' | grep '"state"' | awk -F'"' '{print $4}')
+
+printf "\nCurrent Service: $componenttostart. \nService Maintenance Mode state: $maintenancemode. \nService Status: $servicestate"
+
+if [[ "$maintenancemode" = "OFF" && "$servicestate" != "STARTED" ]]
+then
+ curl -u "ambariserviceaccount":"ambariservicepass" -H "X-Requested-By:ambari" -i -X PUT -d '{"RequestInfo": {"context": "Start $componenttostart","query":"HostRoles/component_name.in('"$componenttostart"')"}, "Body":{"HostRoles": {"state": "STARTED"}}}' http://"$ambariaddress":8080/api/v1/clusters/"$clustername"/hosts/HOSTNAME/host_components/$componenttostart
+fi
+
+done

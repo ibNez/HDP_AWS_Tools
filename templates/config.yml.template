@@ -1,0 +1,33 @@
+---
+ambari: 
+    hdpversion: VERSION
+    ambari_address: AMBARIADDRESS
+    ambari_user: AMBARIADMIN
+    ambari_password: AMBARIAPASSWORD
+    clustername: CLUSTERNAME
+    ambari_service_user: AMBARINANNY
+    ambari_service_password: NANNYPASSWORD
+    fs_s3_accesskey: S3KEY
+    fs_s3_awsAccessKeyId : S3ACCESSSKEY
+    fs_s3_secret_key: S3SECRETKEY
+    fs_s3_awsSecretAccessKey: S3SECRETACCESSKEY
+    fs_s3_impl: org.apache.hadoop.fs.s3a.S3AFileSystem
+    fs_s3a_access_key: S3AKEY
+    fs_s3a_awsAccessKeyId: S3AACCESSKEY
+    fs_s3a_secret_key: S3ASECRETKEY
+    fs_s3a_awsSecretAccessKey: S3ASECRETACCESSKEY
+    fs_s3a_impl: org.apache.hadoop.fs.s3a.S3AFileSystem
+    fs_s3bfs_awsAccessKeyId: S3BACCESSKEY
+    fs_s3n_access_key: S3NKEY
+    fs_s3n_awsAccessKeyId: S3NACCESSKEY
+    fs_s3n_awsSecretAccessKey: S3NSECRETACCESSKEY
+    fs_s3n_endpoint: s3.amazonaws.com
+    fs_s3n_impl: org.apache.hadoop.fs.s3native.NativeS3FileSystem
+    fs_s3n_secret_key: S3NSECRETKEY
+    fs_s3bfs_awsSecretAccessKey: S3BSECRETACCESSKEY
+    fs_s3bfs_impl: org.apache.hadoop.fs.s3.S3FileSystem
+aws:
+    ami: AMIIMAGE
+    instance_type: AWSINSTANCETYPE
+    mapping_file: MAPPINGFILE
+    subnet_id: SUBNETID

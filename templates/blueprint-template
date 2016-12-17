@@ -1,0 +1,27 @@
+{
+  "blueprint": "ha-hdfs",
+  "default_password": "admin",
+  "host_groups": [
+    { "hosts": [
+        { "fqdn": "ip-10-2-151-210.us-west-2.compute.internal" }
+      ], "name": "launcher"
+    },
+    { "hosts": [
+        { "fqdn": "ip-10-2-151-211.us-west-2.compute.internal" }
+      ], "name": "master_1"
+    },
+    { "hosts": [
+        { "fqdn": "ip-10-2-151-212.us-west-2.compute.internal" }
+      ], "name": "master_2"
+    },
+    { "hosts": [
+        { "fqdn": "ip-10-2-151-213.us-west-2.compute.internal" }
+      ], "name": "master_3"
+    },
+    { "hosts": [
+        { "fqdn": "ip-10-2-151-214.us-west-2.compute.internal" }
+      ],
+      "name": "slave_1"    
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+Subject: Ambari-Nanny found service stopped.
+
+Starting Service: SERVICENAME
+
+
+
